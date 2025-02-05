@@ -1,0 +1,37 @@
+body {
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+.center {
+    text-align: center;
+}
+
+.navigation {
+    margin-bottom: 15px;
+    padding: 15px;
+}
+.navigation a {
+    color:white;
+    text-decoration: none;
+    padding: 8px 15px;
+    display: inline-block;
+}
+
+.navigation a:hover {
+    color: black;
+    background-color: white;
+}
+
+.image {
+    float:right;
+    padding: 40px;
+    padding-right: 8em;
+}
+
+main {
+    font-size: xx-large;
+}
+
+header {
+    font-size: xx-large;
+}
