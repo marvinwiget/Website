@@ -118,7 +118,7 @@ function update() {
     context.font="45px sans-serif";
     context.fillText(score + " car(s) evaded, ", 5, 45);
     context.fillText(-enemyVelocity + " enemy speed", 350, 45);
-    if (score >= 2) {
+    if (score >= 25) {
         gameWon = true;
         enemyArray = [];
     }
