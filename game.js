@@ -12,13 +12,19 @@ let gameOver = false;
 let gameWon = false;
 let score = 0;
 
+// sound
+let deathSound = new Audio("./assets/explosion.mp3");
+let moveSound = new Audio("./assets/move.wav");
+let winSound = new Audio("./assets/win.wav");
+let theme = new Audio("./assets/Theme.mp3");
+
 // player
 let playerWidth = 200;
 let playerHeight = 100;
 let playerX = -200;
 let playerY = boardHeight/8 * 5;
 let playerImg;
-let playerVelocity = 8;
+let playerVelocity = 10;
 
 let player = {
     x: playerX,
@@ -43,6 +49,7 @@ let isMovingUp = false;
 let isMovingDown = false;
 
 window.onload = function() {
+    theme.play();
     board = document.getElementById("board");
     board.height = boardHeight;
     board.width = boardWidth;
@@ -119,15 +126,17 @@ function update() {
     newNum /= 100;
     // game stuff
     context.fillStyle = "red";
-    context.font="45px sans-serif";
-    context.fillText(score + " car(s) evaded, ", 5, 45);
+    context.font="32px sans-serif";
+    context.fillText(score + " car(s) evaded ", 5, 45);
     context.fillText(newNum + " enemy speed", 350, 45);
     if (score >= 18) {
         gameWon = true;
         enemyArray = [];
+        winSound.play();
     }
     if (gameOver && !gameWon) {
         context.fillText("GAME OVER", boardWidth/3, boardHeight/2+60);
+        deathSound.play();
     }
     if (gameWon) {
         context.fillText("YOU WON THE GAME", boardWidth/4, boardHeight/2+60);
@@ -170,6 +179,7 @@ function movePlayer(key) {
         if (player.y - playerVelocity > posUp) {
             isMovingUp = true;
             isMovingDown = false;
+            moveSound.play();
         }
         if (gameOver || gameWon) {
             player.y = playerY;
@@ -185,6 +195,7 @@ function movePlayer(key) {
         if (player.y + playerVelocity < posDown) {
             isMovingUp = false;
             isMovingDown = true;
+            moveSound.play();
         }
         if (gameOver || gameWon) {
             player.y = playerY;
