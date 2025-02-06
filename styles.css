@@ -35,3 +35,6 @@ main {
 header {
     font-size: xx-large;
 }
+#board {
+    background-image: url("./assets/road.png");
+}
