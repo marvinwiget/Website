@@ -11,6 +11,7 @@ let posDown = boardHeight/8 * 5;
 let gameOver = false;
 let gameWon = false;
 let score = 0;
+let tick = 1500;
 
 // sound
 let deathSound = new Audio("./assets/explosion.mp3");
@@ -73,9 +74,10 @@ window.onload = function() {
     
 
     requestAnimationFrame(update);
-    setInterval(newEnemy, 1500);
+    setInterval(newEnemy, tick);
     document.addEventListener("keypress", movePlayer);
 }
+
 function update() {
     requestAnimationFrame(update);
     if (gameOver) {
@@ -89,6 +91,7 @@ function update() {
             return;
         }
     }
+    tick -= 2000;
     context.clearRect(0,0,board.width,board.height)
     
     // player
@@ -118,7 +121,7 @@ function update() {
     while (enemyArray.length > 0 && enemyArray[0].x < -enemyWidth) {
         enemyArray.shift();
         score += 1;
-        enemyVelocity *= 1.05;
+        enemyVelocity *= 1.01;
 
     }
     let num = -enemyVelocity * 100;
