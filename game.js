@@ -9,6 +9,7 @@ let posDown = boardHeight/8 * 5;
 
 // game mechanics
 let gameOver = false;
+let gameWon = false;
 let score = 0;
 
 // player
@@ -73,6 +74,14 @@ function update() {
     if (gameOver) {
         return;
     }
+    if (gameWon) {
+        if (player.x + playerVelocity < boardWidth + playerWidth) {
+            player.x += playerVelocity;
+            enemyArray = [];
+        } else {
+            return;
+        }
+    }
     context.clearRect(0,0,board.width,board.height)
     
     // player
@@ -104,14 +113,20 @@ function update() {
         score += 1;
         enemyVelocity -= 0.125;
     }
-
-    context.fillStyle = "white";
+    // game stuff
+    context.fillStyle = "red";
     context.font="45px sans-serif";
     context.fillText(score + " car(s) evaded, ", 5, 45);
     context.fillText(-enemyVelocity + " enemy speed", 350, 45);
-
-    if (gameOver) {
-        context.fillText("GAME OVER", 5, 90);
+    if (score >= 2) {
+        gameWon = true;
+        enemyArray = [];
+    }
+    if (gameOver && !gameWon) {
+        context.fillText("GAME OVER", boardWidth/3, boardHeight/2+60);
+    }
+    if (gameWon) {
+        context.fillText("YOU WON THE GAME", boardWidth/4, boardHeight/2+60);
     }
 }
 
@@ -152,13 +167,14 @@ function movePlayer(key) {
             isMovingUp = true;
             isMovingDown = false;
         }
-        if (gameOver) {
+        if (gameOver || gameWon) {
             player.y = playerY;
             player.x = playerX;
             enemyArray = [];
             score = 0;
             enemyVelocity = -8;
             gameOver = false;
+            gameWon = false;
         }
     }
     if (key.code == "KeyS") {
@@ -166,21 +182,22 @@ function movePlayer(key) {
             isMovingUp = false;
             isMovingDown = true;
         }
-        if (gameOver) {
+        if (gameOver || gameWon) {
             player.y = playerY;
             player.x = playerX;
             enemyArray = [];
             score = 0;
             enemyVelocity = -8;
             gameOver = false;
+            gameWon = false;
         }
     }
     
 }
 
 function detectCollision(a, b) {
-    return a.x < b.x + b.width &&
-           a.x + a.width > b.x &&
-           a.y < b.y + b.height &&
-           a.y + a.height > b.y;
+    return a.x + 20 < b.x + b.width - 20 &&
+           a.x + a.width - 20 > b.x + 20 &&
+           a.y + 20 < b.y + b.height - 20 &&
+           a.y + a.height - 20 > b.y + 20;
 }
