@@ -111,14 +111,18 @@ function update() {
     while (enemyArray.length > 0 && enemyArray[0].x < -enemyWidth) {
         enemyArray.shift();
         score += 1;
-        enemyVelocity -= 0.125;
+        enemyVelocity *= 1.05;
+
     }
+    let num = -enemyVelocity * 100;
+    let newNum = Math.floor(num);
+    newNum /= 100;
     // game stuff
     context.fillStyle = "red";
     context.font="45px sans-serif";
     context.fillText(score + " car(s) evaded, ", 5, 45);
-    context.fillText(-enemyVelocity + " enemy speed", 350, 45);
-    if (score >= 25) {
+    context.fillText(newNum + " enemy speed", 350, 45);
+    if (score >= 18) {
         gameWon = true;
         enemyArray = [];
     }
